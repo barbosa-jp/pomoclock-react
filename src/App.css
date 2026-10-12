@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+
+:root {
+  --purple: #2E1C5B;
+  --light-purple: #8E598A;
+  --white: #E9DDF3;
+  --white-50: rgba(300, 290, 360, 16%);
+
+  --font: "ADLaM Display"
+}
+
+.App {
+  background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple));
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  width: 64px;
+  rotate: -90deg;
+  opacity: 64%;
+
+  color: var(--white);
+  font-family: var(--font);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main {
+  max-height: 85vh;
+  border: 8px solid var(--white-50);
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px;
+  align-items: center;
+}
+
+.options-timer {
+  width: 100%;
+  padding: 0 8px;
+
+  list-style: none;
+  
+  display: flex;
+  gap: 16px;
+  
+  li > button {
+    height: 46px;
+    width: 100%;
+    min-width: 160px;
+    border-radius: 16px;
+    border: none;
+    background: none;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    color: var(--white);
+    font-size: 24px;
+    font-family: var(--font);
+    text-align: center;
+  }
+
+  .selected {
+    background-color: var(--white-50);
+  }
+}
+
+.timer {
+  aspect-ratio: 1 / 1;
+  height: 272px;
+  border-radius: 100%;
+  border: 16px solid var(--white);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.numbers {
+  font-size: 98px;
+  text-align: center;
+  font-family: var(--font);
+  line-height: 75%;
+  color: var(--white);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  p {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 8px;
+  }
+  
+  .colon {
+    width: 64px;
+  } 
+}
+
+.button-start {
+  background-color: var(--white);
+
+  padding: 8px 16px;
+  border: none;
+  border-radius: 16px;
+
+  font-size: 24px;
+  color: var(--light-purple);
+  font-family: var(--font);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
