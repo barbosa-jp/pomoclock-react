@@ -4,19 +4,26 @@
   --purple: #2E1C5B;
   --light-purple: #8E598A;
   --white: #E9DDF3;
-  --white-50: rgba(300, 290, 360, 16%);
-
+  --white-16: rgba(300, 290, 360, 16%);
+  --white-48: rgba(300, 290, 360, 48%);
   --font: "ADLaM Display"
 }
 
-.App {
+body {
   background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple));
-  height: 100vh;
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.App {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 
 .App-logo {
@@ -30,7 +37,7 @@
   }
 }
 
-.App-header {
+.header {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,6 +49,7 @@
 
   color: var(--white);
   font-family: var(--font);
+  font-size: 24px;
 }
 
 .App-link {
@@ -59,18 +67,20 @@
 
 .main {
   max-height: 85vh;
-  border: 8px solid var(--white-50);
+  border: 8px solid var(--white-16);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   padding: 32px;
   align-items: center;
+  height: fit-content;
 }
 
 .options-timer {
   width: 100%;
   padding: 0 8px;
+  margin: 0;
 
   list-style: none;
   
@@ -96,15 +106,14 @@
   }
 
   .selected {
-    background-color: var(--white-50);
+    background-color: var(--white-16);
   }
 }
 
 .timer {
   aspect-ratio: 1 / 1;
-  height: 272px;
-  border-radius: 100%;
-  border: 16px solid var(--white);
+  height: 288px;
+  position: relative;
 
   display: flex;
   justify-content: center;
@@ -122,6 +131,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+  height: 100%;
   
   p {
     margin: 0;
@@ -135,6 +147,39 @@
   .colon {
     width: 64px;
   } 
+}
+
+.circle {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+ 
+  rotate: -90deg;
+  filter: drop-shadow(0px 0px 16px var(--white-48));
+  
+  .circular-progress {
+    position: absolute;
+    stroke-width: 16px;
+    stroke: var(--white);
+    stroke-linecap: round;
+    stroke-dasharray: 850;
+    stroke-dashoffset: 450;
+    border-radius: 100%;
+    fill: none;
+  }
+  
+  .background {
+    border-radius: 100%;
+    fill: none;
+    stroke-width: 16px;
+    stroke: var(--white-16);
+  }
 }
 
 .button-start {
@@ -152,4 +197,40 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
+
+  box-shadow: 0px 0px 16px var(--white-48);
+}
+
+.footer {
+  width: 64px;
+  height: 100%;
+  max-height: 85vh;
+  display: flex;
+  justify-content: center;
+}
+
+.options {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  border: none;
+
+  li > button {
+    background: none;
+    width: 100%;
+    aspect-ratio: 1/1;
+
+    border-radius: 24px;
+    border: 8px solid var(--white-16);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icon {
+    width: 75%;
+  }
 }

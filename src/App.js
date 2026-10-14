@@ -1,11 +1,13 @@
 import PlayIcon from './assets/images/icon-play.svg';
 import ColonImage from './assets/images/colon-image.svg';
+import MusicIcon from './assets/images/icon-music.svg';
+import SettingIcon from './assets/images/icon-settings.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="header">
         <h1>Pomoclock</h1>
       </header>
       <main className="main">
@@ -20,14 +22,21 @@ function App() {
             <img className='colon' src={ColonImage}/>
             <p className='minute'>00</p>
           </div>
+          <svg className='circle' width='100%' height='100%'>
+            <circle className='circular-progress' cx='50%' cy='50%' r='46%'/>
+            <circle className='background' cx='50%' cy='50%' r='46%'/>
+          </svg>
         </div>
-        <button class='button-start' type='button'>
-          <img class='icon' src={PlayIcon}/>
+        <button className='button-start' type='button'>
+          <img className='icon' src={PlayIcon}/>
           START
         </button>
       </main>
       <footer class="footer">
-        <ul></ul>
+        <ul className='options'>
+          <li><button><img className='icon' src={SettingIcon} /></button></li>
+          <li><button><img className='icon' src={MusicIcon} /></button></li>
+        </ul>
       </footer>
     </div>
   );
