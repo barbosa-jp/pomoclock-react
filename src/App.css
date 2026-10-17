@@ -2,23 +2,41 @@
 
 :root {
   --purple: #2E1C5B;
-  --light-purple: #8E598A;
+  --light-purple: #5E1C7B;
+  --light-pink: #C86272;
   --white: #E9DDF3;
   --white-16: rgba(300, 290, 360, 16%);
   --white-48: rgba(300, 290, 360, 48%);
   --font: "ADLaM Display"
 }
 
-body {
-  background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple));
+.background {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple), var(--light-pink), var(--purple));
+  background-size: 300% 300%;
+  background-position: 0% 50%;
+  transition: all 1s ease-in-out;
 }
 
-.App {
+@keyframes background2 {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.button {
+  cursor: pointer;
+  user-select: none;
+}
+
+.app {
   height: fit-content;
   display: flex;
   align-items: center;
@@ -50,6 +68,9 @@ body {
   color: var(--white);
   font-family: var(--font);
   font-size: 24px;
+
+  cursor: default;
+  user-select: none;
 }
 
 .App-link {
@@ -118,6 +139,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  user-select: none;
 }
 
 .numbers {
@@ -174,7 +197,7 @@ body {
     fill: none;
   }
   
-  .background {
+  .circle-background {
     border-radius: 100%;
     fill: none;
     stroke-width: 16px;
