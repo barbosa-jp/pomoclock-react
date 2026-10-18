@@ -73,10 +73,6 @@
   user-select: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -191,10 +187,11 @@
     stroke-width: 16px;
     stroke: var(--white);
     stroke-linecap: round;
-    stroke-dasharray: 850;
-    stroke-dashoffset: 450;
+
     border-radius: 100%;
     fill: none;
+
+    transition: all 1s;
   }
   
   .circle-background {
