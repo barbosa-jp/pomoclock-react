@@ -3,6 +3,8 @@ import PauseIcon from './assets/images/icon-pause.svg'
 import ColonImage from './assets/images/colon-image.svg';
 import MusicIcon from './assets/images/icon-music.svg';
 import SettingIcon from './assets/images/icon-settings.svg';
+import ReloadIcon from './assets/images/relaod-icon.svg';
+import FloatWindowIcon from './assets/images/float-window-icon.svg';
 
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
@@ -10,14 +12,20 @@ import { useState, useRef, useEffect } from 'react';
 function App() {
   const [bgPosition, setBgPosition] = useState('0% 50%');
   const [mode, setMode] = useState('Pomodoro');
+  const [pomoCount, setPomoCount] = useState(0);
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const [progressBar, setProgressBar] = useState(850);
+  const [autoStart, setAutoStart] = useState(false);
 
   useEffect(() => {
     getTimer(mode);
-    setIsPaused(true);
+    if (autoStart) {
+      setIsPaused(false);
+    } else {
+      setIsPaused(true);
+    }
     setProgressBar(850);
   }, [mode])
 
@@ -43,6 +51,30 @@ function App() {
 
   const modes = ['Pomodoro', 'Short Break', 'Long Break'];
   const timers = [25, 5, 15];
+
+  function changeMode(mode) {
+    switch (mode) {
+      case 'Pomodoro': 
+        if (pomoCount < 2) {
+          setPomoCount(pomoCount+1);
+          setMode('Short Break');
+        } else {
+          setPomoCount(0);
+          setMode('Long Break');
+        }
+        break;
+
+      case 'Short Break':
+        setMode('Pomodoro');
+        break;
+
+      case 'Long Break':
+        setMode('Pomodoro');
+        break;
+    }
+
+    setIsPaused(true);
+  }
 
   function changeBackground(option) {
     switch (option) {
@@ -81,8 +113,12 @@ function App() {
   function startTimer() {
     if (!isPaused) {
       if (seconds - 1 < 0) {
-        setMinutes(minutes-1);
-        setSeconds(59);
+        if (minutes-1 < 0) {
+          changeMode(mode);
+        } else {
+          setMinutes(minutes-1);
+          setSeconds(59);
+        }
       } else {
         setSeconds(seconds - 1);
       }
@@ -107,7 +143,12 @@ function App() {
     const currentProgress = progressBar - (total * percent/100);
     
     setProgressBar(currentProgress);
-    console.log(progressBar)
+  }
+
+  function reloadTimer(mode) {
+    getTimer(mode);
+    setIsPaused(true);
+    setProgressBar(850);
   }
 
   return (
@@ -138,17 +179,25 @@ function App() {
               <circle className='circle-background' cx='50%' cy='50%' r='46%'/>
             </svg>
           </div>
-          {
-            isPaused ? 
-            <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-              <img className='icon' src={PlayIcon}/>
-              START
-            </button> :
-            <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-              <img className='icon' src={PauseIcon}/>
-              PAUSE
+          <div className='buttons-timer'>
+            <button className='button side-button'>
+              <img className='icon' src={FloatWindowIcon}/>
             </button>
-          }
+            {
+              isPaused ? 
+              <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
+                <img className='icon' src={PlayIcon}/>
+                START
+              </button> :
+              <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
+                <img className='icon' src={PauseIcon}/>
+                PAUSE
+              </button>
+            }
+            <button className='button side-button' onClick={() => reloadTimer(mode)}>
+              <img className='icon' src={ReloadIcon}/>
+            </button>
+          </div>
         </main>
         <footer className="footer">
           <ul className='options'>

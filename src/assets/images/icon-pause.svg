@@ -1,4 +1,14 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 4H5V20H9V4Z" fill="#5E1C7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#5E1C7B"/>
-<path d="M19 4H15V20H19V4Z" fill="#5E1C7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#5E1C7B"/>
+<path d="M8 4H4V20H8V4Z" fill="#1D0627" fill-opacity="0.64"/>
+<mask id="stroke0_4184_20" maskUnits="userSpaceOnUse" x="2" y="2" width="8" height="20" fill="black">
+<rect fill="white" x="2" y="2" width="8" height="20"/>
+<path d="M8 4H4V20H8V4Z"/>
+</mask>
+<path d="M4 4H8V20H4V4Z" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke="#1D0627" stroke-opacity="0.64" mask="url(#stroke0_4184_20)"/>
+<path d="M20 4H16V20H20V4Z" fill="#1D0627" fill-opacity="0.64"/>
+<mask id="stroke1_4184_20" maskUnits="userSpaceOnUse" x="14" y="2" width="8" height="20" fill="black">
+<rect fill="white" x="14" y="2" width="8" height="20"/>
+<path d="M20 4H16V20H20V4Z"/>
+</mask>
+<path d="M16 4H20V20H16V4Z" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke="#1D0627" stroke-opacity="0.64" mask="url(#stroke1_4184_20)"/>
 </svg>

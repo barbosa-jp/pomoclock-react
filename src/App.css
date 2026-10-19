@@ -7,6 +7,7 @@
   --white: #E9DDF3;
   --white-16: rgba(300, 290, 360, 16%);
   --white-48: rgba(300, 290, 360, 48%);
+  --black-64: rgba(9, 3, 36, 0.64);
   --font: "ADLaM Display"
 }
 
@@ -16,7 +17,7 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple), var(--light-pink), var(--purple));
+  background-image: linear-gradient(to bottom right, var(--purple), var(--light-purple),  var(--light-pink), var(--light-pink));
   background-size: 300% 300%;
   background-position: 0% 50%;
   transition: all 1s ease-in-out;
@@ -202,6 +203,12 @@
   }
 }
 
+.buttons-timer {
+  display: flex;
+  gap: 16px;
+  height: fit-content;
+}
+
 .button-start {
   background-color: var(--white);
 
@@ -210,7 +217,7 @@
   border-radius: 16px;
 
   font-size: 24px;
-  color: var(--light-purple);
+  color: var(--black-64);
   font-family: var(--font);
 
   display: flex;
@@ -219,6 +226,19 @@
   gap: 8px;
 
   box-shadow: 0px 0px 16px var(--white-48);
+}
+
+.side-button {
+  box-shadow: 0px 0px 16px var(--white-48);
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  padding: 16px;
+  border: none;
+  background-color: var(--white);
 }
 
 .footer {
