@@ -8,6 +8,7 @@ import FloatWindowIcon from './assets/images/float-window-icon.svg';
 
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
+import { playSound } from 'react-sounds';
 
 function App() {
   const [bgPosition, setBgPosition] = useState('0% 50%');
@@ -17,16 +18,13 @@ function App() {
   const [seconds, setSeconds] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const [progressBar, setProgressBar] = useState(850);
-  const [autoStart, setAutoStart] = useState(false);
+  const [autoStart, setAutoStart] = useState(true);
 
   useEffect(() => {
     getTimer(mode);
-    if (autoStart) {
-      setIsPaused(false);
-    } else {
-      setIsPaused(true);
-    }
+    setIsPaused(autoStart ? isPaused : true);
     setProgressBar(850);
+    changeBackground(mode);
   }, [mode])
 
   function useInterval(callback, delay) {
@@ -73,7 +71,7 @@ function App() {
         break;
     }
 
-    setIsPaused(true);
+    playSound('notification/completed');
   }
 
   function changeBackground(option) {
