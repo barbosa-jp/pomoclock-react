@@ -5,6 +5,8 @@ import MusicIcon from './assets/images/icon-music.svg';
 import SettingIcon from './assets/images/icon-settings.svg';
 import ReloadIcon from './assets/images/relaod-icon.svg';
 import FloatWindowIcon from './assets/images/float-window-icon.svg';
+import PlusIcon from './assets/images/icon-plus.svg';
+import MinusIcon from './assets/images/icon-minus.svg';
 
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
@@ -19,6 +21,8 @@ function App() {
   const [isPaused, setIsPaused] = useState(true);
   const [progressBar, setProgressBar] = useState(850);
   const [autoStart, setAutoStart] = useState(true);
+  const [selectedTheme, setSelectedTheme] = useState(['2E1C5B', '5E1C7B', 'C86272']);
+  const [config, setConfig] = useState(false);
 
   useEffect(() => {
     getTimer(mode);
@@ -49,6 +53,12 @@ function App() {
 
   const modes = ['Pomodoro', 'Short Break', 'Long Break'];
   const timers = [25, 5, 15];
+  const themes = [
+    ['2E1C5B', '5E1C7B', 'C86272'],
+    ['0F133E', '1C7B75', '49964E'],
+    ['390321', 'BF2856', 'D76B39'],
+    ['0A6085', '96C6AE', 'FC57B2']
+  ];
 
   function changeMode(mode) {
     switch (mode) {
@@ -149,57 +159,97 @@ function App() {
     setProgressBar(850);
   }
 
+  function getModeTimer(mode) {
+    const index = modes.indexOf(mode);
+    return timers[index];
+  }
+
   return (
-    <div className='background' style={{ backgroundPosition: `${bgPosition}`}}>
+    <div className='background' style={{ backgroundPosition: `${bgPosition}`, backgroundImage: `linear-gradient(to bottom right, #${selectedTheme[0]}, #${selectedTheme[1]}, #${selectedTheme[2]}, #${selectedTheme[2]})`}}>
       <div className={`app`}>
         <header className="header">
           <h1>Pomoclock</h1>
         </header>
         <main className="main">
-          <ul className="options-timer">
-            {
-              modes.map((option) => {
-                if (mode === option) {
-                  return <li key={option}><button className='button button-timer selected' type='button' onClick={(e) => changeOptionTimer(e.target, option)}>{option}</button></li>
+          <div className={`settings ${config ? 'activate' : ''}`}>
+            <div className='setting'>
+              <p className='title'>Minutes</p>
+              <ul className='setting-list'>
+                {
+                  modes.map((mode) => {
+                    return <li key={mode}>
+                      <p className='sub-title'>{mode}</p>
+                      <div className='mode-minute-setting'>
+                        <button className='button'><img className='icon' src={PlusIcon}/></button>
+                        <input type='number' placeholder={getModeTimer(mode)}/>
+                        <button className='button'><img className='icon' src={MinusIcon}/></button>
+                      </div>
+                    </li>
+                  })
                 }
-                return <li key={option}><button className='button button-timer' type='button' onClick={(e) => changeOptionTimer(e.target, option)}>{option}</button></li>
-              })
-            } 
-          </ul>
-          <div className='timer'>
-            <div className='numbers'>
-              <p className='minute'>{formatTimer(minutes)}</p>
-              <img className='colon' src={ColonImage}/>
-              <p className='seconds'>{formatTimer(seconds)}</p>
+              </ul>
             </div>
-            <svg className='circle' width='100%' height='100%'>
-              <circle className='circular-progress' cx='50%' cy='50%' r='46%' style={{strokeDasharray: 850, strokeDashoffset: `${850 - progressBar}`}}/>
-              <circle className='circle-background' cx='50%' cy='50%' r='46%'/>
-            </svg>
-          </div>
-          <div className='buttons-timer'>
-            <button className='button side-button'>
-              <img className='icon' src={FloatWindowIcon}/>
-            </button>
-            {
-              isPaused ? 
-              <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-                <img className='icon' src={PlayIcon}/>
-                START
-              </button> :
-              <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-                <img className='icon' src={PauseIcon}/>
-                PAUSE
+            <div className='setting auto-start'>
+              <p className='title'>Auto Start</p>
+              <button className='button'>
+                <div className='button-circle'></div>
               </button>
-            }
-            <button className='button side-button' onClick={() => reloadTimer(mode)}>
-              <img className='icon' src={ReloadIcon}/>
-            </button>
+            </div>
+            <div className='setting'>
+              <p className='title'>Theme</p>
+              <div className='themes'>
+                {
+                  themes.map((theme) => <button className={`button ${theme.toString() === selectedTheme.toString() ? 'selected' : ''}`} onClick={() => setSelectedTheme(theme)} style={{ backgroundImage: `linear-gradient(to bottom right, #${theme[0]}, #${theme[1]}, #${theme[2]}, #${theme[2]})`}}></button>)
+                }
+              </div>
+            </div>
+          </div>
+          <div className={`pomodoro ${config || 'activate'}`}>
+            <ul className="options-timer">
+              {
+                modes.map((option) => {
+                  if (mode === option) {
+                    return <li key={option}><button className='button button-timer selected' type='button' onClick={(e) => changeOptionTimer(e.target, option)}>{option}</button></li>
+                  }
+                  return <li key={option}><button className='button button-timer' type='button' onClick={(e) => changeOptionTimer(e.target, option)}>{option}</button></li>
+                })
+              } 
+            </ul>
+            <div className='timer'>
+              <div className='numbers'>
+                <p className='minute'>{formatTimer(minutes)}</p>
+                <img className='colon' src={ColonImage}/>
+                <p className='seconds'>{formatTimer(seconds)}</p>
+              </div>
+              <svg className='circle' width='100%' height='100%'>
+                <circle className='circular-progress' cx='50%' cy='50%' r='46%' style={{strokeDasharray: 850, strokeDashoffset: `${850 - progressBar}`}}/>
+                <circle className='circle-background' cx='50%' cy='50%' r='46%'/>
+              </svg>
+            </div>
+            <div className='buttons-timer'>
+              <button className='button side-button'>
+                <img className='icon' src={FloatWindowIcon}/>
+              </button>
+              {
+                isPaused ? 
+                <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
+                  <img className='icon' src={PlayIcon}/>
+                  START
+                </button> :
+                <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
+                  <img className='icon' src={PauseIcon}/>
+                  PAUSE
+                </button>
+              }
+              <button className='button side-button' onClick={() => reloadTimer(mode)}>
+                <img className='icon' src={ReloadIcon}/>
+              </button>
+            </div>
           </div>
         </main>
         <footer className="footer">
           <ul className='options'>
-            <li><button className='button'><img className='icon' src={SettingIcon} /></button></li>
+            <li><button className='button' onClick={() => setConfig(!config)}><img className='icon' src={SettingIcon} /></button></li>
             <li><button className='button'><img className='icon' src={MusicIcon} /></button></li>
           </ul>
         </footer>
