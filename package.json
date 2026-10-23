@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vorthain/tab-safe-timers": "^0.2.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-sounds": "^1.0.30"

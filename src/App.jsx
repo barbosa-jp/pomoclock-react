@@ -12,6 +12,7 @@ import CloseIcon from './assets/images/icon-close.svg';
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
 import { playSound } from 'react-sounds';
+import { initTabSafeTimers } from '@vorthain/tab-safe-timers';
 
 function App() {
   const [bgPosition, setBgPosition] = useState('0% 50%');
@@ -27,6 +28,10 @@ function App() {
   const [timerPomo, setTimerPomo] = useState(25);
   const [timerSB, setTimerSB] = useState(5);
   const [timerLB, setTimerLB] = useState(15);
+
+  useEffect(() => {
+    initTabSafeTimers();
+  }, [])
 
   useEffect(() => {
     getTimer(mode);
