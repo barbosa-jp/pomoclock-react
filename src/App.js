@@ -7,6 +7,7 @@ import ReloadIcon from './assets/images/relaod-icon.svg';
 import FloatWindowIcon from './assets/images/float-window-icon.svg';
 import PlusIcon from './assets/images/icon-plus.svg';
 import MinusIcon from './assets/images/icon-minus.svg';
+import CloseIcon from './assets/images/icon-close.svg';
 
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
@@ -23,6 +24,9 @@ function App() {
   const [autoStart, setAutoStart] = useState(true);
   const [selectedTheme, setSelectedTheme] = useState(['2E1C5B', '5E1C7B', 'C86272']);
   const [config, setConfig] = useState(false);
+  const [timerPomo, setTimerPomo] = useState(25);
+  const [timerSB, setTimerSB] = useState(5);
+  const [timerLB, setTimerLB] = useState(15);
 
   useEffect(() => {
     getTimer(mode);
@@ -51,8 +55,8 @@ function App() {
 
   useInterval(startTimer, 1000)
 
+  const timers =[timerPomo, timerSB, timerLB];
   const modes = ['Pomodoro', 'Short Break', 'Long Break'];
-  const timers = [25, 5, 15];
   const themes = [
     ['2E1C5B', '5E1C7B', 'C86272'],
     ['0F133E', '1C7B75', '49964E'],
@@ -164,6 +168,13 @@ function App() {
     return timers[index];
   }
 
+  function changeModeTimer(mode, timer) {
+    const index = modes.indexOf(mode);
+    let newTimers = timers;
+    newTimers[index] = timer;
+    return newTimers
+  }
+
   return (
     <div className='background' style={{ backgroundPosition: `${bgPosition}`, backgroundImage: `linear-gradient(to bottom right, #${selectedTheme[0]}, #${selectedTheme[1]}, #${selectedTheme[2]}, #${selectedTheme[2]})`}}>
       <div className={`app`}>
@@ -180,9 +191,52 @@ function App() {
                     return <li key={mode}>
                       <p className='sub-title'>{mode}</p>
                       <div className='mode-minute-setting'>
-                        <button className='button'><img className='icon' src={PlusIcon}/></button>
-                        <input type='number' placeholder={getModeTimer(mode)}/>
-                        <button className='button'><img className='icon' src={MinusIcon}/></button>
+                        <button className='button' onClick={() => {
+                          switch(mode) {
+                            case 'Pomodoro':
+                              setTimerPomo(v => v + 1);
+                              break;
+                            case 'Short Break':
+                              setTimerSB(v => v + 1);
+                              break;
+                            default:
+                              setTimerLB(v => v + 1);
+                              break;
+                          }
+                        }}>
+                          <img className='icon' src={PlusIcon}/>
+                        </button>
+
+                        <input type='number' value={getModeTimer(mode)} onChange={(e) => {
+                          const value = Number(e.target.value) || 0;
+                          switch(mode) {
+                            case 'Pomodoro':
+                              setTimerPomo(parseInt(value));
+                              break;
+                            case 'Short Break':
+                              setTimerSB(value);
+                              break;
+                            default:
+                              setTimerLB(value);
+                              break;
+                          }
+                          e.target.value = value;
+                        }}/>
+                        <button className='button' onClick={() => {
+                          switch(mode) {
+                            case 'Pomodoro':
+                              setTimerPomo(v => v - 1);
+                              break;
+                            case 'Short Break':
+                              setTimerSB(v => v - 1);
+                              break;
+                            default:
+                              setTimerLB(v => v - 1);
+                              break;
+                          }
+                        }}>
+                          <img className='icon' src={MinusIcon}/>
+                        </button>
                       </div>
                     </li>
                   })
@@ -191,7 +245,7 @@ function App() {
             </div>
             <div className='setting auto-start'>
               <p className='title'>Auto Start</p>
-              <button className='button'>
+              <button className={`button autostart-${autoStart}`} onClick={() => setAutoStart(!autoStart)}>
                 <div className='button-circle'></div>
               </button>
             </div>
@@ -199,7 +253,7 @@ function App() {
               <p className='title'>Theme</p>
               <div className='themes'>
                 {
-                  themes.map((theme) => <button className={`button ${theme.toString() === selectedTheme.toString() ? 'selected' : ''}`} onClick={() => setSelectedTheme(theme)} style={{ backgroundImage: `linear-gradient(to bottom right, #${theme[0]}, #${theme[1]}, #${theme[2]}, #${theme[2]})`}}></button>)
+                  themes.map((theme) => <button key={theme} className={`button ${theme.toString() === selectedTheme.toString() ? 'selected' : ''}`} onClick={() => setSelectedTheme(theme)} style={{ backgroundImage: `linear-gradient(to bottom right, #${theme[0]}, #${theme[1]}, #${theme[2]}, #${theme[2]})`}}></button>)
                 }
               </div>
             </div>
@@ -249,7 +303,7 @@ function App() {
         </main>
         <footer className="footer">
           <ul className='options'>
-            <li><button className='button' onClick={() => setConfig(!config)}><img className='icon' src={SettingIcon} /></button></li>
+            <li><button className='button' onClick={() => setConfig(!config)}><img className='icon' src={config ? CloseIcon : SettingIcon} /></button></li>
             <li><button className='button'><img className='icon' src={MusicIcon} /></button></li>
           </ul>
         </footer>

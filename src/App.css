@@ -201,26 +201,42 @@
   justify-content: space-between;
 
   button {
-    background-color: var(--white-16);
     height: 32px;
     width: 64px;
 
     border-radius: 32px;
 
     display: flex;
-    justify-content: start;
     padding: 0;
 
     transform: justify-content 1s ease-in-out;
   }
 
+  .autostart-true {
+    justify-content: end;
+    background-color: var(--white-48);
+
+    .button-circle {
+      background-color: var(--white);
+    }
+  }
+
+  .autostart-false {
+    justify-content: start;
+    background-color: var(--white-16);
+
+    .button-circle {
+      background-color: var(--white-48);
+    }
+  }
+
   .button-circle {
     border-radius: 100%;
-    background-color: var(--white-48);
     height: 100%;
     aspect-ratio: 1 / 1;
   }
 }
+
 
 .themes {
   display: grid;
