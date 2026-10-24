@@ -449,6 +449,68 @@
   }
 }
 
+.floating-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 16px;
+  background-size: 300% 300%;
+  background-position: 0% 50%;
+  transition: background-position 1s ease-in-out;
+}
+
+.floating-circle {
+  .circular-progress, .circle-background {
+     stroke-width: 16px;
+   }
+}
+
+.floating-timer {
+  height: 70%;
+  aspect-ratio: 1 / 1;
+}
+
+.floating-numbers {
+  font-size: 48px;
+  
+  p {
+    margin-bottom: 4px;
+  }
+
+  .colon {
+    width: 32px;
+  }
+}
+
+.floating-button-timer {
+  flex-direction: column;
+  
+  button {
+    width: 16px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .icon {
+    width: 16px;
+    aspect-ratio: 1 / 1;
+  } 
+}
+
+.floating-header {
+  font-size: 16px;
+  width: 32px;
+  height: 100%;
+
+  h1 {
+    width: 100vh;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .activate {
   display: flex;
 }

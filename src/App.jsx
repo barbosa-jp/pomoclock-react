@@ -8,11 +8,13 @@ import FloatWindowIcon from './assets/images/float-window-icon.svg';
 import PlusIcon from './assets/images/icon-plus.svg';
 import MinusIcon from './assets/images/icon-minus.svg';
 import CloseIcon from './assets/images/icon-close.svg';
+import PassIcon from './assets/images/icon-pass.svg';
 
 import './App.css';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, use } from 'react';
 import { playSound } from 'react-sounds';
 import { initTabSafeTimers } from '@vorthain/tab-safe-timers';
+import { PictureInPicture } from 'popup-flutuante-react';
 
 function App() {
   const [bgPosition, setBgPosition] = useState('0% 50%');
@@ -28,6 +30,8 @@ function App() {
   const [timerPomo, setTimerPomo] = useState(25);
   const [timerSB, setTimerSB] = useState(5);
   const [timerLB, setTimerLB] = useState(15);
+
+  const [floatingScreen, setFloatingScreen] = useState(false);
 
   useEffect(() => {
     initTabSafeTimers();
@@ -72,7 +76,7 @@ function App() {
   function changeMode(mode) {
     switch (mode) {
       case 'Pomodoro': 
-        if (pomoCount < 2) {
+        if (pomoCount < 1) {
           setPomoCount(pomoCount+1);
           setMode('Short Break');
         } else {
@@ -180,6 +184,7 @@ function App() {
     return newTimers
   }
 
+
   return (
     <div className='background' style={{ backgroundPosition: `${bgPosition}`, backgroundImage: `linear-gradient(to bottom right, #${selectedTheme[0]}, #${selectedTheme[1]}, #${selectedTheme[2]}, #${selectedTheme[2]})`}}>
       <div className={`app`}>
@@ -286,7 +291,7 @@ function App() {
               </svg>
             </div>
             <div className='buttons-timer'>
-              <button className='button side-button'>
+              <button className='button side-button' onClick={() => setFloatingScreen(!floatingScreen)}>
                 <img className='icon' src={FloatWindowIcon}/>
               </button>
               {
@@ -312,6 +317,45 @@ function App() {
             <li><button className='button'><img className='icon' src={MusicIcon} /></button></li>
           </ul>
         </footer>
+        <PictureInPicture
+          isOpen={floatingScreen}
+          onClose={() => setFloatingScreen(false)}
+          width='320'
+          height='240'
+        >
+          <div className='floating-screen' style={{ backgroundPosition: `${bgPosition}`, backgroundImage: `linear-gradient(to bottom right, #${selectedTheme[0]}, #${selectedTheme[1]}, #${selectedTheme[2]}, #${selectedTheme[2]})`}}>
+            <header className="header floating-header">
+              <h1>{mode}</h1>
+            </header>
+            <div className='timer floating-timer'>
+              <div className='numbers floating-numbers'>
+                <p className='minute'>{formatTimer(minutes)}</p>
+                <img className='colon' src={ColonImage}/>
+                <p className='seconds'>{formatTimer(seconds)}</p>
+              </div>
+              <svg className='circle floating-circle' width='100%' height='100%'>
+                <circle className='circular-progress' cx='50%' cy='50%' r='46%' style={{strokeDasharray: 850, strokeDashoffset: `${850 - progressBar}`}}/>
+                <circle className='circle-background' cx='50%' cy='50%' r='46%'/>
+              </svg>
+            </div>
+            <div className='buttons-timer floating-button-timer'>
+              <button className='button side-button' onClick={() => changeMode(mode)}>
+                <img className='icon' src={PassIcon}/>
+              </button>
+              <button className='button side-button' type='button' onClick={() => setIsPaused(!isPaused)}>
+              {
+                isPaused ? 
+                <img className='icon' src={PlayIcon}/>
+                :
+                <img className='icon' src={PauseIcon}/>
+              }
+              </button>
+              <button className='button side-button' onClick={() => reloadTimer(mode)}>
+                <img className='icon' src={ReloadIcon}/>
+              </button>
+            </div>
+          </div>  
+        </PictureInPicture>
       </div>
     </div>
   );
