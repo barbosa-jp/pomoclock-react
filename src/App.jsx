@@ -94,7 +94,6 @@ function App() {
         break;
     }
 
-    playSound('notification/completed');
   }
 
   function changeBackground(option) {
@@ -121,6 +120,7 @@ function App() {
       
       changeBackground(option);
       setMode(option);
+      playSound('ui/panel_expand', {volume: 0.4});
       getTimer(option);
     }
   }
@@ -136,6 +136,7 @@ function App() {
       if (seconds - 1 < 0) {
         if (minutes-1 < 0) {
           changeMode(mode);
+          playSound('notification/completed');
         } else {
           setMinutes(minutes-1);
           setSeconds(59);
@@ -183,7 +184,6 @@ function App() {
     newTimers[index] = timer;
     return newTimers
   }
-
 
   return (
     <div className='background' style={{ backgroundPosition: `${bgPosition}`, backgroundImage: `linear-gradient(to bottom right, #${selectedTheme[0]}, #${selectedTheme[1]}, #${selectedTheme[2]}, #${selectedTheme[2]})`}}>
@@ -291,21 +291,22 @@ function App() {
               </svg>
             </div>
             <div className='buttons-timer'>
-              <button className='button side-button' onClick={() => setFloatingScreen(!floatingScreen)}>
+              <button className='button side-button' onClick={() => {
+                playSound('ui/pop_close', {volume: 0.1});
+                setFloatingScreen(!floatingScreen)
+              }}>
                 <img className='icon' src={FloatWindowIcon}/>
               </button>
-              {
-                isPaused ? 
-                <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-                  <img className='icon' src={PlayIcon}/>
-                  START
-                </button> :
-                <button className='button button-start' type='button' onClick={() => setIsPaused(!isPaused)}>
-                  <img className='icon' src={PauseIcon}/>
-                  PAUSE
-                </button>
-              }
-              <button className='button side-button' onClick={() => reloadTimer(mode)}>
+              <button className='button button-start' type='button' onClick={() => {
+                playSound(isPaused ? 'ui/success_bling' : 'ui/button_hard', {volume: 0.2});
+                setIsPaused(!isPaused);
+              }}>
+                <img className='icon' src={isPaused ? PlayIcon : PauseIcon}/>{isPaused ? 'START' : 'PAUSE'}
+              </button>
+              <button className='button side-button' onClick={() => {
+                playSound('ui/button_squishy', {volume: 0.1});
+                reloadTimer(mode);
+              }}>
                 <img className='icon' src={ReloadIcon}/>
               </button>
             </div>
@@ -313,8 +314,11 @@ function App() {
         </main>
         <footer className="footer">
           <ul className='options'>
-            <li><button className='button' onClick={() => setConfig(!config)}><img className='icon' src={config ? CloseIcon : SettingIcon} /></button></li>
-            <li><button className='button'><img className='icon' src={MusicIcon} /></button></li>
+            <li><button className='button' onClick={() => {
+              playSound('ui/item_select', {volume: 0.1});
+              setConfig(!config);
+            }}><img className='icon' src={config ? CloseIcon : SettingIcon} /></button></li>
+            <li><button className='button'><img className='icon' src={MusicIcon} onClick={() => {}}/></button></li>
           </ul>
         </footer>
         <PictureInPicture
